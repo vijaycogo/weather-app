@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign Up</title>
+</head>
+<body>
+  <h1>Sign Up</h1>
+
+  <%= form_with(model: User.new, url: signup_path) do |form| %>
+    <div>
+      <%= form.label :email %>
+      <%= form.email_field :email, autofocus: true %>
+    </div>
+
+    <div>
+      <%= form.label :password %>
+      <%= form.password_field :password %>
+    </div>
+
+    <div>
+      <%= form.label :password_confirmation %>
+      <%= form.password_field :password_confirmation %>
+    </div>
+
+    <div>
+      <%= form.submit 'Sign Up' %>
+    </div>
+  <% end %>
+
+  <%= link_to 'Log In', login_path %>
+</body>
+</html>

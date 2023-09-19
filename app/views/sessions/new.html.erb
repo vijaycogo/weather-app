@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+</head>
+<body>
+  <h1>Login</h1>
+  <%= flash[:alert] %>
+
+  <%= form_with(model: User.new, url: login_path) do |form| %>
+    <div>
+      <%= form.label :email %>
+      <%= form.email_field :email, autofocus: true %>
+    </div>
+
+    <div>
+      <%= form.label :password %>
+      <%= form.password_field :password %>
+    </div>
+
+    <div>
+      <%= form.submit 'Log In' %>
+    </div>
+  <% end %>
+
+  <%= link_to 'Sign Up', signup_path %>
+</body>
+</html>
