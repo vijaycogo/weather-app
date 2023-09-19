@@ -21,6 +21,6 @@ class SessionsController < ApplicationController
   def destroy
     session[:user_id] = nil
     flash[:success] = 'Logout successful!'
-    redirect_to signup_path # Redirect to the desired page after logout.
+    redirect_to root_path # Redirect to the desired page after logout.
   end
 end
