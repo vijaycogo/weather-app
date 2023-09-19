@@ -5,20 +5,22 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by(email: params[:email])
-    if user && user.authenticate(params[:password])
+    user = User.find_by(email: params[:session][:email].downcase)
+    puts user
+    if user && user.authenticate(params[:session][:password])
+      # Successfully signed in
       session[:user_id] = user.id
-      flash[:success] = 'Login successful!'
-      redirect_to weather_path # Redirect to the desired page after login.
+      redirect_to weather_path, notice: 'Successfully signed in!'
     else
+      # Invalid email or password
       flash.now[:alert] = 'Invalid email or password'
-      render 'new' # Render the login form again.
+      render 'new'
     end
   end
 
   def destroy
     session[:user_id] = nil
     flash[:success] = 'Logout successful!'
-    redirect_to login_path # Redirect to the desired page after logout.
+    redirect_to signup_path # Redirect to the desired page after logout.
   end
 end
