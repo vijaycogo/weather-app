@@ -2,31 +2,112 @@
 <html>
 <head>
   <title>Sign Up</title>
+  <style>
+    body {
+      background-image: url('https://i.pinimg.com/736x/aa/c2/e4/aac2e4ae038a93420b0190165c73e06d.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: center center;
+      font-family: Arial, sans-serif;
+      background-color: #FFC107; /* Fun yellow background color */
+      text-align: center;
+      padding: 50px;
+    }
+
+    h1 {
+      color: #3F51B5; /* Royal blue header text color */
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    /* Style the form container */
+    .form-container {
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Style form labels */
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    /* Style form input fields */
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      margin-left: -10px;
+    }
+
+    /* Style form submit button */
+    input[type="submit"] {
+      background-color: #3F51B5; /* Royal blue button color */
+      color: #fff;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #303F9F; /* Darker blue on hover */
+    }
+
+    /* Style the login link */
+    .login-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #3F51B5; /* Royal blue link color */
+      font-size: 18px;
+    }
+
+    .login-link:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-  <h1>Sign Up</h1>
+  <h1>Stay updated with Mausam</h1>
 
-  <%= form_with(model: User.new, url: signup_path) do |form| %>
-    <div>
-      <%= form.label :email %>
-      <%= form.email_field :email, autofocus: true %>
-    </div>
+  <div class="form-container">
+    <%= form_with(model: User.new, url: signup_path) do |form| %>
+      <div>
+        <%= form.label :email %>
+        <%= form.email_field :email, autofocus: true %>
+      </div>
 
-    <div>
-      <%= form.label :password %>
-      <%= form.password_field :password %>
-    </div>
+      <div>
+        <%= form.label :password %>
+        <%= form.password_field :password %>
+      </div>
 
-    <div>
-      <%= form.label :password_confirmation %>
-      <%= form.password_field :password_confirmation %>
-    </div>
+      <div>
+        <%= form.label :password_confirmation %>
+        <%= form.password_field :password_confirmation %>
+      </div>
 
-    <div>
-      <%= form.submit 'Sign Up' %>
-    </div>
-  <% end %>
+      <div>
+        <%= form.submit 'Sign Up' %>
+      </div>
+    <% end %>
 
-  <%= link_to 'Log In', login_path %>
+    <%= link_to 'Log In', login_path, class: 'login-link' %>
+  </div>
 </body>
 </html>

@@ -2,36 +2,183 @@
 <html>
 <head>
   <title>Weather Information</title>
+  <style>
+    /* Reset some default browser styles */
+    body, h1, h2, p, div {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Set a background color and font for the body */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-color: #f6f6f6; 
+    }
+
+    /* Style the main title */
+    h1 {
+      text-align: center;
+      padding: 20px 0;
+      background-color: #86807d;
+      color: #fff;
+      font-size: 36px;
+      font-family: 'Comic Sans MS', cursive;
+    }
+
+    /* Style the form container */
+    .weather-container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 4px;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Style form labels */
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 10px;
+      font-size: 18px;
+      color: #333;
+    }
+
+    /* Style form input fields */
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    /* Style form submit button */
+    input[type="submit"] {
+      background-color: #ff6600;
+      color: #fff;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 18px;
+      font-family: 'Comic Sans MS', cursive; 
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #ff4500; /* Slightly darker orange on hover */
+    }
+
+    /* Style the weather information container */
+    .weather-info {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 4px;
+      margin-top: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Style weather information text */
+    .weather-info h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #ff6600; /* Vibrant orange heading */
+    }
+
+    .weather-info p {
+      font-size: 18px;
+      margin: 5px 0;
+      color: #333;
+    }
+
+    /* Style error messages */
+    .weather-error {
+      color: #FF0000;
+      text-align: center;
+      margin-top: 20px;
+      font-size: 18px;
+    }
+
+    /* Style the logout link */
+    .logout-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #ff6600; /* Vibrant orange link */
+      font-size: 18px;
+      font-family: 'Comic Sans MS', cursive; /* Playful font */
+    }
+
+    .logout-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Set background image based on temperature */
+    <% if !@temperature  %>
+      body {
+        background-image: url('https://images.unsplash.com/photo-1601134467661-3d775b999c8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2875&q=80');
+      }
+    <% elsif @temperature > 30 %>
+      body {
+        background-image: url('https://cdn.pixabay.com/photo/2016/10/25/12/28/thunderstorm-1768742_1280.jpg');
+      }
+    <% elsif @temperature > 20 %>
+      body {
+        background-image: url('https://images.unsplash.com/photo-1580193813605-a5c78b4ee01a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjF8fHdlYXRoZXJ8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60');
+      }
+    <% elsif @temperature > 10 %>
+      body {
+        background-image: url('https://images.unsplash.com/photo-1581608198007-4801faa3859a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjl8fHdlYXRoZXJ8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60');
+      }
+    <% else %>
+      body {
+        background-image: url('https://plus.unsplash.com/premium_photo-1675715923850-b5be1d5d71a7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDl8fHdlYXRoZXJ8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60');
+      }
+    <% end %>
+  </style>
 </head>
 <body>
   <h1>Weather Information</h1>
-  
-  <%= form_with(url: weather_path, method: 'post') do |form| %>
-    <div>
-      <%= form.label :city, 'Enter City Name:' %>
-      <%= form.text_field :city, autofocus: true %>
-    </div>
 
-    <div>
-      <%= form.submit 'Get Weather' %>
-    </div>
-  <% end %>
+  <div class="weather-container">
+    <%= form_with(url: weather_path, method: 'post', class: 'weather-form') do |form| %>
+      <div>
+        <%= form.label :city, 'Enter City Name:' %>
+        <%= form.text_field :city, autofocus: true %>
+      </div>
 
-  <% if @weather_data %>
-    <h2>Current Weather in <%= @city %>:</h2>
-    <p>Temperature: <%= @temperature %> &deg;C</p>
-    <p>Description: <%= @description %></p>
-    <p>Humidity: <%= @humidity %> %</p>
-    <p>Pressure: <%= @pressure %> hPa</p>
-    <p>Wind Speed: <%= @wind_speed %> m/s</p>
-    <p>Visibility: <%= @visibility %> meters</p>
-    <p>Sunrise: <%= @sunrise_time.strftime('%H:%M:%S') %></p>
-    <p>Sunset: <%= @sunset_time.strftime('%H:%M:%S') %></p>
-  <% elsif flash[:alert] %>
-    <p><%= flash[:alert] %></p>
-  <% end %>
+      <div>
+        <%= form.submit 'Get Weather' %>
+      </div>
+    <% end %>
 
-  <%= link_to 'Log Out', logout_path, method: :delete %>
-  
+    <% if @weather_data %>
+      <div class="weather-info">
+        <h2>Current Weather in <%= @city %>:</h2>
+        <!-- Display the image based on temperature -->
+        <p>Temperature: <%= @temperature %> &deg;F</p>
+        <p>Description: <%= @description %></p>
+        <p>Humidity: <%= @humidity %> %</p>
+        <p>Pressure: <%= @pressure %> hPa</p>
+        <p>Wind Speed: <%= @wind_speed %> m/s</p>
+        <p>Visibility: <%= @visibility %> meters</p>
+        <p>Sunrise: <%= @sunrise_time.strftime('%H:%M:%S') %></p>
+        <p>Sunset: <%= @sunset_time.strftime('%H:%M:%S') %></p>
+      </div>
+    <% elsif flash[:alert] %>
+      <p class="weather-error"><%= flash[:alert] %></p>
+    <% end %>
+  </div>
+
+  <%= link_to 'Log Out', logout_path, method: :delete, class: 'logout-link' %>
 </body>
 </html>
+

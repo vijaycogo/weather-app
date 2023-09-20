@@ -6,31 +6,43 @@
   <style>
     /* Define the background image and styles */
     body {
-      background-image: image-url('/assets/images/fd054edc.jpg'); /* Replace with the actual path to your background image */
+      background-image: url('https://home.openweathermap.org/assets/history_banner-3e72b47aa91f9e874b5e56197a88feacafd37ad4eaccfa3974302b37004ec7f5.png');/* Replace with the actual path to your background image */
       background-size: cover;
       background-repeat: no-repeat;
       background-attachment: fixed;
       background-position: center center;
-      color: #4a727d; /* Text color */
+      color: #d41f1c; /* Text color */
       text-align: center;
       font-size: 24px;
-      padding: 100px; /* Adjust as needed */
+      padding: 100px;
     }
 
+ /* Center the buttons vertically in the middle of the screen */
     .buttons {
-      margin-top: 20px;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     }
+
 
     .btn {
-      margin: 5px;
+      margin: 25px;
+      text-decoration: none; /* Remove underlines */
+      color: #159157; /* Text color for links */
+    }
+
+    .btn:hover {
+      text-decoration: none; /* Remove underlines on hover */
+      color: #a476da; /* Text color for links on hover */
     }
   </style>
 </head>
 <body>
-  <h1>Welcome to WeatherApp</h1>
+  <h1>Welcome to Mausam</h1>
   <div class="buttons">
-    <%= link_to "Sign Up", signup_path, class: "btn btn-primary" %>
     <%= link_to "Login", login_path, class: "btn btn-secondary" %>
+    <%= link_to "Sign Up", signup_path, class: "btn btn-primary" %>
   </div>
 </body>
 </html>
